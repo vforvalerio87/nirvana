@@ -12,4 +12,13 @@ const Component = function(props) {
   }
 }
 
-document.getElementById('root').appendChild(new Component({value: 'prova'}).render())
+const Nirvana = function() {
+  return {}
+}
+Nirvana.createElement = function(props) {
+  return new Component(props).render()
+}
+
+const test = Nirvana.createElement({ value: 'prova' })
+
+document.getElementById('root').appendChild(test)
