@@ -1,24 +1,23 @@
 console.log('Welcome to Nirvana.')
 
-const Component = function(props) {
+const Nirvana = function() {
+  return {}
+}
+Nirvana.createElement = function(element, props, children) {
+  return new Component(element, props, children).render()
+}
+
+const Component = function(element, props, children) {
   return {
     props,
     render() {
-      const { value } = this.props
-      const div = document.createElement('div')
-      div.innerHTML = value
+      const div = document.createElement(element)
+      div.innerHTML = children
       return div 
     }
   }
 }
 
-const Nirvana = function() {
-  return {}
-}
-Nirvana.createElement = function(props) {
-  return new Component(props).render()
-}
+const prova = <p>{'We we'}</p>
 
-const test = Nirvana.createElement({ value: 'prova' })
-
-document.getElementById('root').appendChild(test)
+document.getElementById('root').appendChild(prova)
