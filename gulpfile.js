@@ -23,4 +23,4 @@ gulp.task('moveIndex', () =>
     .pipe(gulp.dest('./build'))
 )
 
-gulp.task('default', ['build', 'moveIndex'], () => { console.log('Build finished')})
+gulp.task('default', ['build', 'moveIndex', 'moveApi'], () => { console.log('Build finished')})
