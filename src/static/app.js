@@ -1,15 +1,15 @@
 const root = document.getElementById('root')
 
 function renderToDOM (componentPromise, target) {
-  componentPromise.then(component => {
+  const promise = componentPromise()
+  promise.then(component => {
     target.innerHTML = component
   })
 }
 
-const state = {
+let state = {
   title: `Nirvana`,
-  body: `Next-generation browser application framework`,
-  //message: `Sono il signore del male`
+  body: `Next-generation browser application framework`
 }
 
 const stateAccessor = new Proxy(
@@ -17,6 +17,7 @@ const stateAccessor = new Proxy(
   {
     get: (target, propKey) => {
       if (propKey in target) {
+        console.log(`propKey "${propKey}" found in target; getting from state`)
         return Promise.resolve(Reflect.get(target, propKey))
       } else {
         console.log(`propKey "${propKey}" not found in target; fetching from network`)
@@ -33,28 +34,46 @@ const stateAccessor = new Proxy(
   }
 )
 
-const Header = new Promise(resolve => {
+const Header = () => new Promise(resolve => {
   stateAccessor.title
     .then(title => { resolve(`<h1>${title}</h1>`) })
 })
 
-const Body = new Promise(resolve => {
+const Body = () => new Promise(resolve => {
   stateAccessor.body
     .then(body => { resolve(`<p>${body}</p>`) })
 })
 
-const MessageBar = new Promise(resolve => {
+const MessageBar = () => new Promise(resolve => {
   stateAccessor.message
     .then(message => { resolve (`<p>${message}</p>`) })
 })
 
-const Home = Promise.all([Header, Body, MessageBar])
-  .then(([headerElement, bodyElement, messageBarElement]) => new Promise(resolve => {
+const RefreshButton = () => Promise.resolve(`<button onclick="renderToDOM(Home, root)">Refresh</button>`)
+
+const DeleteButton = () => Promise.resolve(`<button onclick="delete state.message">Delete</button>`)
+
+const Home = () => Promise.all([
+  Header(),
+  Body(),
+  MessageBar(),
+  RefreshButton(),
+  DeleteButton()
+])
+  .then(([
+    headerElement,
+    bodyElement,
+    messageBarElement,
+    refreshButtonElement,
+    deleteButtonElement
+  ]) => new Promise(resolve => {
     resolve(
       `${headerElement}
       ${bodyElement}
-      ${messageBarElement}`
-    )
-  }))
+      ${messageBarElement}
+      ${refreshButtonElement}
+      ${deleteButtonElement}`
+    )})
+  )
 
 renderToDOM(Home, root)
