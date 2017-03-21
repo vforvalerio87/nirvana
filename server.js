@@ -7,6 +7,7 @@ const app = express()
 
 const publicPath = path.join(__dirname, '/src')
 
+app.use('/api', express.static(path.join(publicPath, 'api')))
 app.use('/static', express.static(path.join(publicPath, 'static')))
 app.get(['/', '/:any'], (_, res) => {
   res.sendFile(path.join(publicPath, 'index.html'))

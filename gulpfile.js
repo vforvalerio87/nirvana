@@ -7,17 +7,15 @@ gulp.task('build', () =>
   gulp.src('./src/static/app.js')
     .pipe(babel(
       {
-        plugins: [
-          'transform-async-to-generator',
-          [
-            'transform-react-jsx',
-            { 'pragma': 'Nirvana.createElement' }
-          ]
-        ],
         presets: ['babili']
       }
     ))
     .pipe(gulp.dest('./build/static'))
+)
+
+gulp.task('moveApi', () =>
+  gulp.src('./src/api/*')
+    .pipe(gulp.dest('./build/api'))
 )
 
 gulp.task('moveIndex', () =>
