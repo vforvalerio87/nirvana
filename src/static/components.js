@@ -13,8 +13,8 @@ export const MessageBar = (stateHandler) => new Promise(resolve => {
     .then(message => { resolve (`<p>${message}</p>`) })
 })
 
-export const RefreshButton = (component) => Promise.resolve(`<button onclick="renderToDOM(Home, root)">Refresh</button>`)
+export const RefreshButton = (component) => Promise.resolve(`<button onclick="renderToDOM(${component.name}, root)">Refresh</button>`)
 
-export const DeleteButton = (stateHandler) => Promise.resolve(`<button onclick="delete stateAccessor(Home).message">Delete</button>`)
+export const DeleteButton = (stateHandler, component) => Promise.resolve(`<button onclick="delete ${stateHandler.name}(${component.name}).message">Delete</button>`)
 
-export const ChangeMessageButton = (stateHandler) => Promise.resolve(`<button onclick="stateAccessor(Home).message='Sono il signore del male'">Change message</button>`)
+export const ChangeMessageButton = (stateHandler, component) => Promise.resolve(`<button onclick="${stateHandler.name}(${component.name}).message='Sono il signore del male'">Change message</button>`)

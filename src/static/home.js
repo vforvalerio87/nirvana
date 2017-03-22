@@ -9,9 +9,9 @@ export function Home() {
       Header(homeStateHandler),
       Body(homeStateHandler),
       MessageBar(homeStateHandler),
-      RefreshButton(homeStateHandler),
-      DeleteButton(homeStateHandler),
-      ChangeMessageButton(homeStateHandler)
+      RefreshButton(Home),
+      DeleteButton(stateAccessor, Home),
+      ChangeMessageButton(stateAccessor, Home)
     ])
       .then(([
         headerElement,
