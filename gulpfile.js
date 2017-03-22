@@ -4,8 +4,19 @@ const gulp = require('gulp')
 const babel = require('gulp-babel')
 const rollup = require('rollup-stream')
 const source = require('vinyl-source-stream')
+const browserSync = require('browser-sync')
 
-gulp.task('rollup', () =>
+gulp.task('moveApi', () =>
+  gulp.src('./src/api/*')
+    .pipe(gulp.dest('./build/api'))
+)
+
+gulp.task('moveIndex', () =>
+  gulp.src('./src/index.html')
+    .pipe(gulp.dest('./build'))
+)
+
+gulp.task('rollup', ['moveApi', 'moveIndex'], () =>
   rollup({
     entry: './src/static/app.js'
   })
@@ -22,14 +33,18 @@ gulp.task('babel', ['rollup'] , () =>
     ))
 )
 
-gulp.task('moveApi', () =>
-  gulp.src('./src/api/*')
-    .pipe(gulp.dest('./build/api'))
-)
+gulp.task('serve', () => {
+  browserSync({
+    server: './build',
+    baseDir: './',
+    port: 8080,
+    notify: false
+  })
+})
 
-gulp.task('moveIndex', () =>
-  gulp.src('./src/index.html')
-    .pipe(gulp.dest('./build'))
-)
+gulp.task('watch', () => {
+  gulp.watch('./src/static/*.js', ['babel'])
+  gulp.watch('./build/static/app.js').on('change', browserSync.reload)
+})
 
-gulp.task('default', ['babel', 'moveApi', 'moveIndex'] , () => { console.log('Build finished')})
+gulp.task('default', ['serve', 'watch'], () => { console.log('Build finished')})

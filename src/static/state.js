@@ -42,7 +42,12 @@ export function stateAccessor() {
         Object.entries(boundElements[propKey]).forEach(([key, value]) => {
           console.log(key, value)
           value(stateAccessor()).then(component => {
+            const elementToReplace = document.querySelector(`[nirvana-id=${key}]`)
+            const parser = new DOMParser()
+            const newHTML = parser.parseFromString(component, `text/html`).firstChild
+            console.log(newHTML)
             console.log(`devo rimpiazzare l'elemento con 'nirvana-id=${key}' con '${component}'`)
+            // elementToReplace.innerHTML = newHTML
           })
         })
       },
