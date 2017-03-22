@@ -1,35 +1,24 @@
-import { Header, Body, MessageBar, RefreshButton, DeleteButton, ChangeMessageButton } from './components'
+import { Header, Body, MessageBar } from './components'
 import { stateAccessor } from './state'
 
-export function homeStateHandler () {
-  return stateAccessor(Home)
-}
+const homeStateHandler = stateAccessor(Home)
 
 export function Home() {
   return(
     Promise.all([
       Header(homeStateHandler),
       Body(homeStateHandler),
-      MessageBar(homeStateHandler),
-      RefreshButton(Home),
-      DeleteButton(homeStateHandler),
-      ChangeMessageButton(homeStateHandler)
+      MessageBar(homeStateHandler)
     ])
       .then(([
         headerElement,
         bodyElement,
-        messageBarElement,
-        refreshButtonElement,
-        deleteButtonElement,
-        changeMessageButtonElement
+        messageBarElement
       ]) => new Promise(resolve => {
         resolve(
           `${headerElement}
           ${bodyElement}
-          ${messageBarElement}
-          ${refreshButtonElement}
-          ${deleteButtonElement}
-          ${changeMessageButtonElement}`
+          ${messageBarElement}`
         )})
       )
   )
