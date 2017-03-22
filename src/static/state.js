@@ -1,12 +1,18 @@
-import { renderToDOM } from './renderer'
-import { root } from './app'
-
 let state = {
   title: `Nirvana`,
   body: `Next-generation browser application framework`
 }
 
-export function stateAccessor(component) {
+let boundElements = {}
+
+export function boundElementsAccessor() {
+  return new Proxy(
+    boundElements,
+    {}
+  )
+}
+
+export function stateAccessor() {
   return new Proxy(
     state,
     {
@@ -33,7 +39,12 @@ export function stateAccessor(component) {
         Reflect.set(target, propKey, propValue)
         // FAI UNA FUNZIONE PER RILEVARE TUTTI I COMPONENTI CON LO STATE LEGATO A QUESTA KEY, RECUPERALI E RIMPIAZZA IL LORO NODO DI DOM CON QUELLO NUOVO
         console.log('settata una key, devo updatare')
-        // renderToDOM(component, root)
+        Object.entries(boundElements[propKey]).forEach(([key, value]) => {
+          console.log(key, value)
+          value(stateAccessor()).then(component => {
+            console.log(`devo rimpiazzare l'elemento con 'nirvana-id=${key}' con '${component}'`)
+          })
+        })
       },
       deleteProperty: (target, propKey) => {
         console.log(`DELETE ${propKey}`)

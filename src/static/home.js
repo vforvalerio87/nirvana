@@ -1,14 +1,12 @@
 import { Header, Body, MessageBar } from './components'
 import { stateAccessor } from './state'
 
-const homeStateHandler = stateAccessor(Home)
-
 export function Home() {
   return(
     Promise.all([
-      Header(homeStateHandler),
-      Body(homeStateHandler),
-      MessageBar(homeStateHandler)
+      Header(stateAccessor()),
+      Body(stateAccessor()),
+      MessageBar(stateAccessor())
     ])
       .then(([
         headerElement,
