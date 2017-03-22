@@ -5,7 +5,7 @@ const path = require('path')
 
 const app = express()
 
-const publicPath = path.join(__dirname, '/src')
+const publicPath = path.join(__dirname, '/build')
 
 app.use('/api', express.static(path.join(publicPath, 'api')))
 app.use('/static', express.static(path.join(publicPath, 'static')))
