@@ -14,6 +14,8 @@
     "babel-preset-babili": "0.0.12",
     "express": "^4.15.2",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2"
+    "gulp-babel": "^6.1.2",
+    "rollup-stream": "^1.19.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

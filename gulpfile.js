@@ -2,15 +2,24 @@
 
 const gulp = require('gulp')
 const babel = require('gulp-babel')
+const rollup = require('rollup-stream')
+const source = require('vinyl-source-stream')
 
-gulp.task('build', () =>
-  gulp.src('./src/static/app.js')
+gulp.task('rollup', () =>
+  rollup({
+    entry: './src/static/app.js'
+  })
+  .pipe(source('app.js'))
+  .pipe(gulp.dest('./build/static'))
+)
+
+gulp.task('babel', ['rollup'] , () =>
+  gulp.src('./build/static/app.js')
     .pipe(babel(
       {
         presets: ['babili']
       }
     ))
-    .pipe(gulp.dest('./build/static'))
 )
 
 gulp.task('moveApi', () =>
@@ -23,4 +32,4 @@ gulp.task('moveIndex', () =>
     .pipe(gulp.dest('./build'))
 )
 
-gulp.task('default', ['build', 'moveIndex', 'moveApi'], () => { console.log('Build finished')})
+gulp.task('default', ['babel', 'moveIndex', 'moveApi'], () => { console.log('Build finished')})
