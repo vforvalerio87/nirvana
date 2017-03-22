@@ -1,48 +1,20 @@
-import { stateAccessor } from './state'
-
-export const Header = () => new Promise(resolve => {
-  stateAccessor.title
+export const Header = (stateHandler) => new Promise(resolve => {
+  stateHandler.title
     .then(title => { resolve(`<h1>${title}</h1>`) })
 })
 
-export const Body = () => new Promise(resolve => {
-  stateAccessor.body
+export const Body = (stateHandler) => new Promise(resolve => {
+  stateHandler.body
     .then(body => { resolve(`<p>${body}</p>`) })
 })
 
-export const MessageBar = () => new Promise(resolve => {
-  stateAccessor.message
+export const MessageBar = (stateHandler) => new Promise(resolve => {
+  stateHandler.message
     .then(message => { resolve (`<p>${message}</p>`) })
 })
 
-export const RefreshButton = () => Promise.resolve(`<button onclick="renderToDOM(Home, root)">Refresh</button>`)
+export const RefreshButton = (component) => Promise.resolve(`<button onclick="renderToDOM(Home, root)">Refresh</button>`)
 
-export const DeleteButton = () => Promise.resolve(`<button onclick="delete stateAccessor.message">Delete</button>`)
+export const DeleteButton = (stateHandler) => Promise.resolve(`<button onclick="delete stateAccessor(Home).message">Delete</button>`)
 
-export const ChangeMessageButton = () => Promise.resolve(`<button onclick="stateAccessor.message='Sono il signore del male'">Change message</button>`)
-
-export const Home = () => Promise.all([
-  Header(),
-  Body(),
-  MessageBar(),
-  RefreshButton(),
-  DeleteButton(),
-  ChangeMessageButton()
-])
-  .then(([
-    headerElement,
-    bodyElement,
-    messageBarElement,
-    refreshButtonElement,
-    deleteButtonElement,
-    changeMessageButtonElement
-  ]) => new Promise(resolve => {
-    resolve(
-      `${headerElement}
-      ${bodyElement}
-      ${messageBarElement}
-      ${refreshButtonElement}
-      ${deleteButtonElement}
-      ${changeMessageButtonElement}`
-    )})
-  )
+export const ChangeMessageButton = (stateHandler) => Promise.resolve(`<button onclick="stateAccessor(Home).message='Sono il signore del male'">Change message</button>`)
