@@ -1,4 +1,4 @@
-import { Header, Body, MessageBar } from './components'
+import { Header, Body, NetworkMessageBar, InputMessageBar, InputBox } from './components'
 import { stateAccessor } from './state'
 
 export function Home() {
@@ -6,17 +6,23 @@ export function Home() {
     Promise.all([
       Header(stateAccessor()),
       Body(stateAccessor()),
-      MessageBar(stateAccessor())
+      NetworkMessageBar(stateAccessor()),
+      InputMessageBar(stateAccessor()),
+      InputBox(stateAccessor())
     ])
       .then(([
         headerElement,
         bodyElement,
-        messageBarElement
+        networkMessageBarElement,
+        inputMessageBarElement,
+        inputBoxElement
       ]) => new Promise(resolve => {
         resolve(
           `${headerElement}
           ${bodyElement}
-          ${messageBarElement}`
+          ${networkMessageBarElement}
+          ${inputMessageBarElement}
+          ${inputBoxElement}`
         )})
       )
   )

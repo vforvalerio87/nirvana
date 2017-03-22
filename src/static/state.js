@@ -1,6 +1,7 @@
 let state = {
   title: `Nirvana`,
-  body: `Next-generation browser application framework`
+  body: `Next-generation browser application framework`,
+  messageFromInput: `Please type a message`
 }
 
 let boundElements = {}
@@ -37,17 +38,12 @@ export function stateAccessor() {
       set: (target, propKey, propValue) => {
         console.log(`SET ${propKey} to ${propValue}`)
         Reflect.set(target, propKey, propValue)
-        // FAI UNA FUNZIONE PER RILEVARE TUTTI I COMPONENTI CON LO STATE LEGATO A QUESTA KEY, RECUPERALI E RIMPIAZZA IL LORO NODO DI DOM CON QUELLO NUOVO
-        console.log('settata una key, devo updatare')
         Object.entries(boundElements[propKey]).forEach(([key, value]) => {
-          console.log(key, value)
           value(stateAccessor()).then(component => {
             const elementToReplace = document.querySelector(`[nirvana-id=${key}]`)
             const parser = new DOMParser()
-            const newHTML = parser.parseFromString(component, `text/html`).firstChild
-            console.log(newHTML)
-            console.log(`devo rimpiazzare l'elemento con 'nirvana-id=${key}' con '${component}'`)
-            // elementToReplace.innerHTML = newHTML
+            const newHTML = parser.parseFromString(component, `text/html`).body.firstChild.innerHTML
+            elementToReplace.innerHTML = newHTML
           })
         })
       },
@@ -56,9 +52,14 @@ export function stateAccessor() {
         if (propKey in target) {
           console.log(`propKey "${propKey}" found in target; deleting`)
           Reflect.deleteProperty(target, propKey)
-          // FAI UNA FUNZIONE PER RILEVARE TUTTI I COMPONENTI CON LO STATE LEGATO A QUESTA KEY, RECUPERALI E RIMPIAZZA IL LORO NODO DI DOM CON QUELLO NUOVO
-          console.log('deletata una key, devo updatare')
-          // renderToDOM(component, root)
+          Object.entries(boundElements[propKey]).forEach(([key, value]) => {
+            value(stateAccessor()).then(component => {
+              const elementToReplace = document.querySelector(`[nirvana-id=${key}]`)
+              const parser = new DOMParser()
+              const newHTML = parser.parseFromString(component, `text/html`).body.firstChild.innerHTML
+              elementToReplace.innerHTML = newHTML
+            })
+          })
         }
         else console.log(`${propKey} not found in target; doing nothing`)
       }
