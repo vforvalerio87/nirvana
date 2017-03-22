@@ -1,7 +1,9 @@
 import { Header, Body, MessageBar, RefreshButton, DeleteButton, ChangeMessageButton } from './components'
 import { stateAccessor } from './state'
 
-const homeStateHandler = stateAccessor(Home)
+export function homeStateHandler () {
+  return stateAccessor(Home)
+}
 
 export function Home() {
   return(
@@ -10,8 +12,8 @@ export function Home() {
       Body(homeStateHandler),
       MessageBar(homeStateHandler),
       RefreshButton(Home),
-      DeleteButton(stateAccessor, Home),
-      ChangeMessageButton(stateAccessor, Home)
+      DeleteButton(homeStateHandler),
+      ChangeMessageButton(homeStateHandler)
     ])
       .then(([
         headerElement,
