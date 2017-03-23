@@ -1,3 +1,5 @@
+// TODO: state props will accept Objects as values
+// TODO: state prop values will accept a 'defaultValue' key and a 'dataSource' key (for network call URLs)
 let state = {
   title: `Nirvana`,
   body: `Next-generation browser application framework`,
@@ -13,6 +15,9 @@ export function boundElementsAccessor() {
   )
 }
 
+// TODO: 'console.log's to be disabled outside of debug mode
+// TODO: optimize DOM access and element rendering
+// TODO: move, abstract and encapsulate API calls using 'dataSource' value from state[propKey] object
 export function stateAccessor() {
   return new Proxy(
     state,

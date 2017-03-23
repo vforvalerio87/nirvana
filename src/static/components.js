@@ -10,6 +10,8 @@ export const Body = stateHandler => new Promise(resolve => {
     .then(body => { resolve(`<p>${body}</p>`) })
 })
 
+// TODO: nirvana-id will be assigned programmatically to each object
+// TODO: adding a rendered component to the boundElementsAccessor() will be incapsulated and abstracted from the developer
 export const NetworkMessageBar = stateHandler => new Promise(resolve => {
   stateHandler.messageFromAPI
     .then(messageFromAPI => {
@@ -28,4 +30,6 @@ export const InputMessageBar = stateHandler => new Promise(resolve => {
     })
 })
 
+// TODO: Event listener and stateAccessor() to be added programmatically
+// TODO: stateAccessor() will accept parameters
 export const InputBox = () => Promise.resolve(`<input type="text" oninput="stateAccessor().messageFromInput = this.value" value="">`)
