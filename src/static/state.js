@@ -6,7 +6,7 @@ let state = {
   messageFromInput: `Please type a message`
 }
 
-let boundElements = {}
+export let boundElements = {}
 
 export function boundElementsAccessor() {
   return new Proxy(

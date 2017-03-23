@@ -1,4 +1,4 @@
-import { boundElementsAccessor } from './state'
+import { boundElements, boundElementsAccessor } from './state'
 
 export const Header = stateHandler => new Promise(resolve => {
   stateHandler.title
@@ -18,6 +18,8 @@ export const NetworkMessageBar = stateHandler => new Promise(resolve => {
       const nirvanaId = 'p4wd'
       resolve (`<p nirvana-id="${nirvanaId}">${messageFromAPI}</p>`)
       boundElementsAccessor().messageFromAPI = { [nirvanaId]: NetworkMessageBar }
+      if (boundElements.messageFromAPI && nirvanaId in boundElements.messageFromAPI) { console.log(`boundElement already registered`) }
+      else { boundElementsAccessor().messageFromAPI = Object.assign({}, boundElements.messageFromAPI, { [nirvanaId]: NetworkMessageBar }) }
     })
 })
 
@@ -26,7 +28,8 @@ export const InputMessageBar = stateHandler => new Promise(resolve => {
     .then(messageFromInput => {
       const nirvanaId = 'zkm3'
       resolve (`<p nirvana-id="${nirvanaId}">${messageFromInput}</p>`)
-      boundElementsAccessor().messageFromInput = { [nirvanaId]: InputMessageBar }
+      if (boundElements.messageFromInput && nirvanaId in boundElements.messageFromInput) { console.log(`boundElement already registered`) }
+      else { boundElementsAccessor().messageFromInput = Object.assign({}, boundElements.messageFromInput, { [nirvanaId]: InputMessageBar }) }
     })
 })
 

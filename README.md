@@ -6,7 +6,7 @@ Key features:
 
 Because 'view !== f(state)'; actually 'view === async f(await state)'
 
-To install dependencies:
+To install dependencies:  
 `npm install`
 
 To run:
