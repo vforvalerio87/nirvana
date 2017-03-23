@@ -6,8 +6,8 @@ export function Home() {
     Promise.all([
       Header(stateAccessor()),
       Body(stateAccessor()),
-      NetworkMessageBar(stateAccessor()),
-      InputMessageBar(stateAccessor()),
+      NetworkMessageBar(stateAccessor(), 'sjdgjiasbnajs'),
+      InputMessageBar(stateAccessor(), 'ad4shfbash'),
       InputBox(stateAccessor())
     ])
       .then(([

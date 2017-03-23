@@ -12,21 +12,18 @@ export const Body = stateHandler => new Promise(resolve => {
 
 // TODO: nirvana-id will be assigned programmatically to each object
 // TODO: adding a rendered component to the boundElementsAccessor() will be incapsulated and abstracted from the developer
-export const NetworkMessageBar = stateHandler => new Promise(resolve => {
+export const NetworkMessageBar = (stateHandler, nirvanaId) => new Promise(resolve => {
   stateHandler.messageFromAPI
     .then(messageFromAPI => {
-      const nirvanaId = 'p4wd'
       resolve (`<p nirvana-id="${nirvanaId}">${messageFromAPI}</p>`)
-      boundElementsAccessor().messageFromAPI = { [nirvanaId]: NetworkMessageBar }
       if (boundElements.messageFromAPI && nirvanaId in boundElements.messageFromAPI) { console.log(`boundElement already registered`) }
       else { boundElementsAccessor().messageFromAPI = Object.assign({}, boundElements.messageFromAPI, { [nirvanaId]: NetworkMessageBar }) }
     })
 })
 
-export const InputMessageBar = stateHandler => new Promise(resolve => {
+export const InputMessageBar = (stateHandler, nirvanaId) => new Promise(resolve => {
   stateHandler.messageFromInput
     .then(messageFromInput => {
-      const nirvanaId = 'zkm3'
       resolve (`<p nirvana-id="${nirvanaId}">${messageFromInput}</p>`)
       if (boundElements.messageFromInput && nirvanaId in boundElements.messageFromInput) { console.log(`boundElement already registered`) }
       else { boundElementsAccessor().messageFromInput = Object.assign({}, boundElements.messageFromInput, { [nirvanaId]: InputMessageBar }) }

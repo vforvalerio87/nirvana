@@ -44,7 +44,7 @@ export function stateAccessor() {
         console.log(`SET ${propKey} to ${propValue}`)
         Reflect.set(target, propKey, propValue)
         Object.entries(boundElements[propKey]).forEach(([key, value]) => {
-          value(stateAccessor()).then(component => {
+          value(stateAccessor(), key).then(component => {
             const elementToReplace = document.querySelector(`[nirvana-id=${key}]`)
             const parser = new DOMParser()
             const newHTML = parser.parseFromString(component, `text/html`).body.firstChild.innerHTML
