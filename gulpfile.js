@@ -18,7 +18,8 @@ gulp.task('moveIndex', () =>
 
 gulp.task('rollup', ['moveApi', 'moveIndex'], () =>
   rollup({
-    entry: './src/static/app.js'
+    input: './src/static/app.js',
+    format: 'cjs'
   })
   .pipe(source('app.js'))
   .pipe(gulp.dest('./build/static'))
